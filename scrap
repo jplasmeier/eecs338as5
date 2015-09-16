@@ -1,0 +1,38 @@
+
+	/* Create Writer Threads */
+	for(t = 0; t < NUM_WRITERS; t++) {
+		printf("MAIN: Creating thread: %ld\n", t);
+		
+		/* Populate parameters */
+		writer_data_array[t].thread_id = t;
+		writer_data_array[t].filename = "log.out";
+		writer_data_array[t].data_to_write = messages[t];	
+		
+		/* Create thread */
+		rc = pthread_create(&writer_threads[t], &attribute, writeFile, (void *) &writer_data_array[t]);
+		
+		/* Error handling for thread creation */		
+		if (rc) {
+			perror("Error creating thead\n");
+			exit(-1);
+		}	
+	}
+
+
+	/* Create Reader Threads */
+	for(t = 0; t < NUM_READERS; t++) {
+		printf("MAIN: Creating thread: %ld\n", t);
+		
+		/* Populate parameters */
+		reader_data_array[t].thread_id = t;
+		reader_data_array[t].filename = "log.out";
+		
+		/* Create thread */
+		rc = pthread_create(&reader_threads[t], &attribute, readFile, (void *) &reader_data_array[t]);
+		
+		/* Error handling for thread creation */		
+		if (rc) {
+			perror("Error creating thead\n");
+			exit(-1);
+		}	
+	}
