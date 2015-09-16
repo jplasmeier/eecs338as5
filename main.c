@@ -66,11 +66,12 @@ void *writeFile(void *thread_arg) {
 	printf("Thread %d is going to attempt to write.\n", thread_id);
 	pthread_mutex_lock(&mutex);
 	printf("Thread %d has cleared the mutex. The readCount is %d\n", thread_id, readCount);
-	while(readCount > 0) {
+	if(readCount > 0) {
 		printf("Thread %d waiting condition reached. Waiting for cv signal.\n", thread_id);
 		pthread_cond_wait(&reader_cv, &mutex);
 		printf("Writer with thread id %d. Going to write: %s to file %s\n", thread_id, data_to_write, filename); 
 	}
+	else printf("Writer with thread id %d. Going to write: %s to file %s\n", thread_id, data_to_write, filename); 
 	pthread_mutex_unlock(&mutex);
 		
 	/* Exit the writer */	
