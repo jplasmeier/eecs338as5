@@ -36,3 +36,23 @@
 			exit(-1);
 		}	
 	}
+
+
+#if 0
+#endif
+
+
+	/* Attempt to actually read a file */
+	FILE* fp;
+	int c;
+	printf("READER [%d]: Now reading from file: %s. [readCount = %d]\n", thread_id, filename, readCount); 
+	fp = fopen("log.txt", "r");
+	while(1) {
+		c = fgetc(fp);
+		if (feof(fp)) {
+			break;
+		}
+		printf("%c",c);		
+	}
+	fclose(fp);
+

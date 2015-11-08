@@ -3,6 +3,9 @@
 #include <pthread.h>
 #include <time.h>
 
+#define NUM_WRITERS 8 
+#define NUM_READERS 12
+
 struct reader_data {
 	int thread_id;
 	char* filename;
